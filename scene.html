@@ -1,0 +1,86 @@
+<DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, WebVR! - A-Frame</title>
+    <meta name="description" content="Hello, WebVR! - A-Frame">
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-box src="./saturn.jpg" id="box" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+      <a-sphere src="./sun.jpg" id="sphere" position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+      <a-cylinder src="./saturn.jpg" id="cylinder" position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <a-sky src="./space-cat.jpg"></a-sky>
+    </a-scene>
+
+    <script>
+      let scene = document.querySelector('a-scene');
+      let box = scene.querySelector('#box');
+      let cylinder = scene.querySelector('#cylinder');
+      let sphere = scene.querySelector('#sphere');
+
+      turnAround(box, 'rotation');
+      turnAround(cylinder, 'rotation');
+      moveAround(sphere, 'position');
+
+      function turnAround(el, attr) {
+        let x = 45;
+        let y = 0;
+        let z = 45;
+
+        setInterval(function () {
+            el.setAttribute(`${attr}`, `${x} ${y} ${z}`);
+            
+            x++;
+            y++;
+            z++;
+        }, 5);
+      }
+      
+      function moveAround(el, attr) {
+        let x = 0;
+        let y = 0;
+        let z = 0;
+        let factor = 1;
+
+        setInterval(function () {
+            el.setAttribute(`${attr}`, `${z} ${y} ${z}`);
+            
+            x += factor;
+            y += factor;
+            z += factor;
+
+            // x
+            if (y > 3) {
+                factor = -1;
+            }
+
+            if (x <= -3) {
+                factor = 1;
+            }
+
+            // y
+            if (y > 3) {
+                factor = -1;
+            }
+
+            if (y <= -3) {
+                factor = 1;
+            }
+            
+            // z
+            if (z > 3) {
+                factor = -1;
+            }
+
+            if (z <= -3) {
+                factor = 1;
+            }
+
+        }, 100);
+      }
+
+    </script>
+
+  </body>
+</html>
